@@ -1,13 +1,13 @@
 # Catabase Adoption & Shelter Management System
 CS340 Fall 2026
-Group: 77
+Group 77
 Team Members: Kaia Bahar, Max Riley, Ashley Davis
 
 
 
 ## Project Description
 
-**Catabase** is a database system for managing a caat shelter's adoption requests and foster placements. It uses six tables: Cats, Adopters, StaffMembers, FosterHomes, AdoptionRequests, and FosterAssignments. The two intersection tables represent M:N (many-to-many) relationships between adopters and cats, and also between cats and foster homes.
+**Catabase** is a database system for managing a cat shelter's adoption requests and foster placements. It uses six tables: Cats, Adopters, StaffMembers, FosterHomes, AdoptionRequests, and FosterAssignments. The two intersection tables represent M:N (many-to-many) relationships between adopters and cats, and also between cats and foster homes.
 
 This project follows a three-tier structure:
 1) a MySQL database
@@ -15,15 +15,15 @@ This project follows a three-tier structure:
 3) a test driver
 
 The class provides READ operations for all six tables, and CREATE, UPDATE, and DELETE operations for the intersection
-table AdoptionRequests. Queries are the class methods, and have parameterized SQL for values that are supplied. The python test driver demonstrates these operations and print their results.
+table AdoptionRequests. Queries are the class methods, and have parameterized SQL for values that are supplied. The Python test driver demonstrates these operations and prints their results.
 
 ## Requirements & Installation
 The following are required: Python 3, a local running MySQL server, and your MySQL login credentials. 
-Keep DDL.sql, catabase_dao.py and test_driver.py files stored in the same project folder. 
+Keep DDL.sql, catabase_dao.py and test_driver.py stored in the same project folder. 
 
 
 ### macOS / Linux
-Open terminal while you are in this project folder and install the required Python dependency:
+Open Terminal while you are in this project folder and install the required Python dependency:
 ```sh
 python3 -m venv venv
 source venv/bin/activate
@@ -31,7 +31,7 @@ python3 -m pip install mysql-connector-python
 ```
 
 
-### Windows Powershell
+### Windows PowerShell
 Use Python if needed and then activate with:
 ```powershell
 python -m venv venv
@@ -42,21 +42,21 @@ python -m pip install mysql-connector-python
 
 ### Catabase Database Setup
 
-Start your local MySQL server. While in your project folder, run the below command - replacing YOUR_USERNAME with your MySQL username, which is likley root:
+Start your local MySQL server. While in your project folder, run the below command - replacing YOUR_USERNAME with your MySQL username, which is likely root:
 
 ```sh
 mysql -u YOUR_USERNAME -p
 ```
 
-After entering your username and pressing Enter, your will be prompted for yourb MySQL password. Type in your password. Press Enter.
+After entering your username and pressing Enter, your will be prompted for your MySQL password. Type in your password. Press Enter.
 
-If you get the following message: 'command not found: mysql` and MySQL is installed at
-`/usr/local/mysql', instead use the following command:
+If you get the following message: `command not found: mysql` and MySQL is installed at
+`/usr/local/mysql`, instead use the following command:
 ```sh
 /usr/local/mysql/bin/mysql -u YOUR_USERNAME -p
 ```
 
-When you successfully see the mysql>prompt, then run:
+When you successfully see the mysql> prompt, then run:
 ```sh
 CREATE DATABASE IF NOT EXISTS Catabase;
 USE Catabase;
@@ -85,7 +85,7 @@ db = mysql.connector.connect(
 Replace YOUR_MYSQL_USERNAME with your MySQL user name and replace YOUR_MYSQL_PASSWORD with your password.
 localhost indicates that the server is on your computer. In the case that you used a different name, change the database. 
 
-While the virtual environment is active and the terminal in your porject folder is open, run:
+While the virtual environment is active and the terminal in your project folder is open, run:
 ```sh
 python3 test_driver.py
 ```
@@ -113,12 +113,12 @@ None: represents SQL NULL.
 Note that the generated request IDs may differ between different runs.
 
 
-To save the CLI ouput, run:
+To save the CLI output, run:
 ```sh
 python3 test_driver.py > CLI_OUT.txt 2>&1
 ```
 
-For Windows, use python in place of python3 is needed.
+For Windows, use python in place of python3 as needed.
 
 
 
