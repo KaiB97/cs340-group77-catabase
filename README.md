@@ -3,6 +3,8 @@ CS340 Fall 2026
 Group: 77
 Team Members: Kaia Bahar, Max Riley, Ashley Davis
 
+
+
 ## Project Description
 
 **Catabase** is a database system for managing a caat shelter's adoption requests and foster placements. It uses six tables: Cats, Adopters, StaffMembers, FosterHomes, AdoptionRequests, and FosterAssignments. The two intersection tables represent M:N (many-to-many) relationships between adopters and cats, and also between cats and foster homes.
