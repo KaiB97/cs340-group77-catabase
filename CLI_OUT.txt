@@ -1,0 +1,101 @@
+Catabase test run
+
+Cats:
+{'catID': 1, 'catName': 'Theo', 'estimatedAge': 24, 'intakeDate': datetime.date(2026, 9, 1), 'breed': 'Ragdoll', 'temperament': 'Calm', 'adoptionStatus': 'Available'}
+{'catID': 2, 'catName': 'Jupiter', 'estimatedAge': 12, 'intakeDate': datetime.date(2026, 9, 1), 'breed': 'Mainecoon', 'temperament': 'Playful', 'adoptionStatus': 'Adopted'}
+{'catID': 3, 'catName': 'Bella', 'estimatedAge': 36, 'intakeDate': datetime.date(2026, 9, 28), 'breed': 'Domestic Longhair', 'temperament': None, 'adoptionStatus': 'Available'}
+{'catID': 4, 'catName': 'Coco', 'estimatedAge': 18, 'intakeDate': datetime.date(2026, 10, 15), 'breed': 'Bengal', 'temperament': 'Shy', 'adoptionStatus': 'Pending'}
+
+Adopters:
+{'adopterID': 1, 'fName': 'Kaia', 'lName': 'Bahar', 'phoneNumber': '905-123-456', 'email': 'bahark@oregonstate.edu', 'homeType': 'House', 'city': 'Toronto'}
+{'adopterID': 2, 'fName': 'Jordan', 'lName': 'Singh', 'phoneNumber': '416-555-0102', 'email': 'jordan.singh@example.com', 'homeType': 'House', 'city': 'Toronto'}
+{'adopterID': 3, 'fName': 'Taylor', 'lName': 'Brooks', 'phoneNumber': '905-555-0103', 'email': 'taylor.brooks@example.com', 'homeType': 'Townhouse', 'city': 'Hamilton'}
+
+StaffMembers:
+{'staffID': 1, 'fName': 'Alex', 'lName': 'Morgan', 'staffPosition': 'Adoption Coordinator', 'email': 'alex.morgan@example.com'}
+{'staffID': 2, 'fName': 'Jamie', 'lName': 'Patel', 'staffPosition': 'Shelter Volunteer', 'email': 'jamie.patel@example.com'}
+{'staffID': 3, 'fName': 'Casey', 'lName': 'Lee', 'staffPosition': 'Foster Coordinator', 'email': 'casey.lee@example.com'}
+
+FosterHomes:
+{'fosterHomeID': 1, 'fosterName': 'Maple Foster Home', 'fosterStatus': 'Available', 'phoneNumber': '416-555-0111', 'city': 'Toronto', 'maxNumberCats': 3}
+{'fosterHomeID': 2, 'fosterName': 'Cedar Foster Home', 'fosterStatus': 'Available', 'phoneNumber': '905-555-0112', 'city': 'Hamilton', 'maxNumberCats': 2}
+{'fosterHomeID': 3, 'fosterName': 'Willow Foster Home', 'fosterStatus': 'Unavailable', 'phoneNumber': '905-555-0113', 'city': 'Burlington', 'maxNumberCats': 1}
+
+AdoptionRequests before testing:
+{'adoptionReqID': 1, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 9, 5), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': 'Housing requirements not met.'}
+{'adoptionReqID': 2, 'adopterID': 2, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 21), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 3, 'adopterID': 1, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 10, 1), 'adoptionReqStatus': 'Approved', 'adoptionReqNotes': 'Adoption completed.'}
+{'adoptionReqID': 4, 'adopterID': 3, 'catID': 3, 'reviewedByStaffID': 2, 'adoptionReqDate': datetime.date(2026, 10, 22), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Initial review completed; follow-up needed.'}
+{'adoptionReqID': 5, 'adopterID': 2, 'catID': 4, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 23), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+
+FosterAssignments:
+{'fosterAssignmentID': 1, 'fosterHomeID': 1, 'catID': 1, 'fosterStartDate': datetime.date(2026, 9, 1), 'fosterEndDate': datetime.date(2026, 9, 10), 'fosterReason': 'Quiet environment'}
+{'fosterAssignmentID': 2, 'fosterHomeID': 2, 'catID': 1, 'fosterStartDate': datetime.date(2026, 9, 10), 'fosterEndDate': datetime.date(2026, 9, 20), 'fosterReason': 'Temporary caregiver availability'}
+{'fosterAssignmentID': 3, 'fosterHomeID': 1, 'catID': 1, 'fosterStartDate': datetime.date(2026, 9, 20), 'fosterEndDate': None, 'fosterReason': 'Return to familiar home'}
+{'fosterAssignmentID': 4, 'fosterHomeID': 2, 'catID': 2, 'fosterStartDate': datetime.date(2026, 9, 1), 'fosterEndDate': datetime.date(2026, 9, 25), 'fosterReason': 'Shelter capacity'}
+{'fosterAssignmentID': 5, 'fosterHomeID': 1, 'catID': 3, 'fosterStartDate': datetime.date(2026, 10, 1), 'fosterEndDate': None, 'fosterReason': 'Socialization'}
+
+Test cat: Theo
+
+CREATE: NULL reviewer and NULL notes
+Created request ID: 10
+
+CREATE: NULL reviewer and supplied notes
+Created request ID: 11
+
+CREATE: supplied reviewer and NULL notes
+Created request ID: 12
+
+CREATE: supplied reviewer and supplied notes
+Created request ID: 13
+
+AdoptionRequests after CREATE:
+{'adoptionReqID': 1, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 9, 5), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': 'Housing requirements not met.'}
+{'adoptionReqID': 2, 'adopterID': 2, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 21), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 3, 'adopterID': 1, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 10, 1), 'adoptionReqStatus': 'Approved', 'adoptionReqNotes': 'Adoption completed.'}
+{'adoptionReqID': 4, 'adopterID': 3, 'catID': 3, 'reviewedByStaffID': 2, 'adoptionReqDate': datetime.date(2026, 10, 22), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Initial review completed; follow-up needed.'}
+{'adoptionReqID': 5, 'adopterID': 2, 'catID': 4, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 23), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 10, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 11, 3), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 11, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 11, 3), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Applicant asked about indoor-only care.'}
+{'adoptionReqID': 12, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 11, 3), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 13, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 11, 3), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Staff will arrange a meet-and-greet.'}
+
+Changing test requests to cat: Jupiter
+
+UPDATE: supplied reviewer and supplied notes
+Request 10: 1 row(s) affected.
+
+UPDATE: supplied reviewer and NULL notes
+Request 11: 1 row(s) affected.
+
+UPDATE: NULL reviewer and supplied notes
+Request 12: 1 row(s) affected.
+
+UPDATE: NULL reviewer and NULL notes
+Request 13: 1 row(s) affected.
+
+AdoptionRequests after UPDATE:
+{'adoptionReqID': 1, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 9, 5), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': 'Housing requirements not met.'}
+{'adoptionReqID': 2, 'adopterID': 2, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 21), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 3, 'adopterID': 1, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 10, 1), 'adoptionReqStatus': 'Approved', 'adoptionReqNotes': 'Adoption completed.'}
+{'adoptionReqID': 4, 'adopterID': 3, 'catID': 3, 'reviewedByStaffID': 2, 'adoptionReqDate': datetime.date(2026, 10, 22), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Initial review completed; follow-up needed.'}
+{'adoptionReqID': 5, 'adopterID': 2, 'catID': 4, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 23), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 10, 'adopterID': 2, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 11, 4), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': 'Housing requirements not met.'}
+{'adoptionReqID': 11, 'adopterID': 2, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 11, 4), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': None}
+{'adoptionReqID': 12, 'adopterID': 2, 'catID': 2, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 11, 4), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Waiting for a new reviewer.'}
+{'adoptionReqID': 13, 'adopterID': 2, 'catID': 2, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 11, 4), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+
+DELETE: remove the four test requests
+Request 10: 1 row(s) affected.
+Request 11: 1 row(s) affected.
+Request 12: 1 row(s) affected.
+Request 13: 1 row(s) affected.
+
+AdoptionRequests after DELETE:
+{'adoptionReqID': 1, 'adopterID': 1, 'catID': 1, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 9, 5), 'adoptionReqStatus': 'Denied', 'adoptionReqNotes': 'Housing requirements not met.'}
+{'adoptionReqID': 2, 'adopterID': 2, 'catID': 1, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 21), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+{'adoptionReqID': 3, 'adopterID': 1, 'catID': 2, 'reviewedByStaffID': 1, 'adoptionReqDate': datetime.date(2026, 10, 1), 'adoptionReqStatus': 'Approved', 'adoptionReqNotes': 'Adoption completed.'}
+{'adoptionReqID': 4, 'adopterID': 3, 'catID': 3, 'reviewedByStaffID': 2, 'adoptionReqDate': datetime.date(2026, 10, 22), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': 'Initial review completed; follow-up needed.'}
+{'adoptionReqID': 5, 'adopterID': 2, 'catID': 4, 'reviewedByStaffID': None, 'adoptionReqDate': datetime.date(2026, 10, 23), 'adoptionReqStatus': 'Pending', 'adoptionReqNotes': None}
+
+Finished testing Catabase. Connection now closed.
