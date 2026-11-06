@@ -29,7 +29,7 @@ This project follows a three-tier structure:
 3) a test driver
 
 The class provides READ operations for all six tables, and CREATE, UPDATE, and DELETE operations for the intersection
-table AdoptionRequests. Queries are the class methods, and have parameterized SQL for values that are supplied. The Python test driver demonstrates these operations and prints their results.
+table AdoptionRequests. Queries are encapsulated in the class methods, and have parameterized SQL for values that are supplied. The Python test driver demonstrates these operations and prints their results.
 
 ## Requirements & Installation
 The following are required: Python 3, a local running MySQL server, and your MySQL login credentials. 
@@ -62,7 +62,7 @@ Start your local MySQL server. While in your project folder, run the below comma
 mysql -u YOUR_USERNAME -p
 ```
 
-After entering your username and pressing Enter, your will be prompted for your MySQL password. Type in your password. Press Enter.
+After entering your username and pressing Enter, you will be prompted for your MySQL password. Type in your password. Press Enter.
 
 If you get the following message: `command not found: mysql` and MySQL is installed at
 `/usr/local/mysql`, instead use the following command:
@@ -71,7 +71,7 @@ If you get the following message: `command not found: mysql` and MySQL is instal
 ```
 
 When you successfully see the mysql> prompt, then run:
-```sh
+```sql
 CREATE DATABASE IF NOT EXISTS Catabase;
 USE Catabase;
 SOURCE DDL.sql;
@@ -119,7 +119,7 @@ The test driver will print:
     - All six table records
     - Four new adoption requests, covering all combinations of supplied/NULL reviewers and notes
     - Four UPDATE results: each showing 1 row(s) affected, and changed records
-    - Four DELETE resultsL each showing 1 row(s) affected, and the original five requests 
+    - Four DELETE results: each showing 1 row(s) affected, and the original five requests 
     - A confirmation message that testing is finished and the connection has closed.
 
 Dates: appear as datetime.date(...).
