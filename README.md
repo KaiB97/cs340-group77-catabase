@@ -12,7 +12,7 @@
 <img
   src="assets/kitten1.png"
   alt="kitten"
-  width="800"
+  width="100%"
 />
 
 </div>
