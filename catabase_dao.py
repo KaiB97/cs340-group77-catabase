@@ -84,9 +84,15 @@ class CatabaseDAO:
         """READ for the AdoptionRequests intersection table (includes requests with no reviewer)."""
         cursor = self.db.cursor(dictionary=True)
         sql = """
-        SELECT adoptionReqID, adopterID, catID, reviewedByStaffID, adoptionReqDate, adoptionReqStatus, adoptionReqNotes
-        FROM AdoptionRequests
-        ORDER BY adoptionReqID
+        SELECT ar.adoptionReqID, ar.adopterID, CONCAT(a.fName, ' ', a.lName) AS adopterName,
+               ar.catID, c.catName,
+               ar.reviewedByStaffID, CONCAT(s.fName, ' ', s.lName) AS reviewerName,
+               ar.adoptionReqDate, ar.adoptionReqStatus, ar.adoptionReqNotes
+        FROM AdoptionRequests ar
+        JOIN Adopters a ON ar.adopterID = a.adopterID
+        JOIN Cats c ON ar.catID = c.catID
+        LEFT JOIN StaffMembers s ON ar.reviewedByStaffID = s.staffID
+        ORDER BY ar.adoptionReqID
         """
         cursor.execute(sql)
         results = cursor.fetchall()
@@ -97,9 +103,13 @@ class CatabaseDAO:
         """READ for the FosterAssignments intersection table (NULL end date = ongoing placement)."""
         cursor = self.db.cursor(dictionary=True)
         sql = """
-        SELECT fosterAssignmentID, fosterHomeID, catID, fosterStartDate, fosterEndDate, fosterReason
-        FROM FosterAssignments
-        ORDER BY fosterAssignmentID
+        SELECT fa.fosterAssignmentID, fa.fosterHomeID, fh.fosterName,
+               fa.catID, c.catName,
+               fa.fosterStartDate, fa.fosterEndDate, fa.fosterReason
+        FROM FosterAssignments fa
+        JOIN FosterHomes fh ON fa.fosterHomeID = fh.fosterHomeID
+        JOIN Cats c ON fa.catID = c.catID
+        ORDER BY fa.fosterAssignmentID
         """
         cursor.execute(sql)
         results = cursor.fetchall()
