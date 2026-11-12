@@ -1,5 +1,5 @@
 -- Course: CS340 Fall 2026
--- Project Step 3 Draft
+-- Project Step 3 Final
 -- Catabase Adoption & Shelter Management System
 -- Team Members: Kaia Bahar, Ashley Davis, Max Riley
 -- Group Number: Group 77
@@ -107,7 +107,7 @@ CREATE TABLE `AdoptionRequests` (
 -- each row records one cat's stay in a foster home
 -- separate assignment ID allows the same cat to return to the same home at a later point
 -- Foster placements represent temporary care, not completed adoptions.
--- NULL fosterEndDate means palcement is ongoing 
+-- NULL fosterEndDate means placement is ongoing 
 CREATE TABLE `FosterAssignments` (
     `fosterAssignmentID` INT NOT NULL AUTO_INCREMENT,
     `fosterHomeID` INT NOT NULL,
@@ -157,20 +157,27 @@ INSERT INTO `FosterHomes` (`fosterHomeID`, `fosterName`, `fosterStatus`, `phoneN
 
 -- Example data for AdoptionRequests
 INSERT INTO `AdoptionRequests` (`adoptionReqID`, `adopterID`, `catID`, `reviewedByStaffID`, `adoptionReqDate`, `adoptionReqStatus`, `adoptionReqNotes`) VALUES
-    (1, 1, 1, 1, '2026-09-05', 'Denied', 'Housing requirements not met.'),
-    (2, 2, 1, NULL, '2026-10-21', 'Pending', NULL),
-    (3, 1, 2, 1, '2026-10-01', 'Approved', 'Adoption completed.'),
-    (4, 3, 3, 2, '2026-10-22', 'Pending', 'Initial review completed; follow-up needed.'),
-    (5, 2, 4, NULL, '2026-10-23', 'Pending', NULL);
+    (1, (SELECT `adopterID` FROM `Adopters` WHERE `email` = 'bahark@oregonstate.edu'), (SELECT `catID` FROM `Cats` WHERE `catName` = 'Theo'),
+        (SELECT `staffID` FROM `StaffMembers` WHERE `email` = 'alex.morgan@example.com'), '2026-09-05', 'Denied', 'Housing requirements not met.'),
+    (2, (SELECT `adopterID` FROM `Adopters` WHERE `email` = 'jordan.singh@example.com'), (SELECT `catID` FROM `Cats` WHERE `catName` = 'Theo'), NULL, '2026-10-21', 'Pending', NULL),
+    (3, (SELECT `adopterID` FROM `Adopters` WHERE `email` = 'bahark@oregonstate.edu'), (SELECT `catID` FROM `Cats` WHERE `catName` = 'Jupiter'),
+        (SELECT `staffID` FROM `StaffMembers` WHERE `email` = 'alex.morgan@example.com'), '2026-10-01', 'Approved', 'Adoption completed.'),
+    (4, (SELECT `adopterID` FROM `Adopters` WHERE `email` = 'taylor.brooks@example.com'), (SELECT `catID` FROM `Cats` WHERE `catName` = 'Bella'),
+        (SELECT `staffID` FROM `StaffMembers` WHERE `email` = 'jamie.patel@example.com'), '2026-10-22', 'Pending', 'Initial review completed; follow-up needed.'),
+    (5, (SELECT `adopterID` FROM `Adopters` WHERE `email` = 'jordan.singh@example.com'), (SELECT `catID` FROM `Cats` WHERE `catName` = 'Coco'), NULL, '2026-10-23', 'Pending', NULL);
 
 -- Example data for FosterAssignments
 INSERT INTO `FosterAssignments` (`fosterAssignmentID`, `fosterHomeID`, `catID`, `fosterStartDate`, `fosterEndDate`, `fosterReason`) VALUES
-    (1, 1, 1, '2026-09-01', '2026-09-10', 'Quiet environment'),
-    (2, 2, 1, '2026-09-10', '2026-09-20', 'Temporary caregiver availability'),
-    (3, 1, 1, '2026-09-20', NULL, 'Return to familiar home'),
-    (4, 2, 2, '2026-09-01', '2026-09-25', 'Shelter capacity'),
-    (5, 1, 3, '2026-10-01', NULL, 'Socialization');
-
+    (1, (SELECT `fosterHomeID` FROM `FosterHomes` WHERE `phoneNumber` = '416-555-0111'),
+        (SELECT `catID` FROM `Cats` WHERE `catName` = 'Theo'), '2026-09-01', '2026-09-10', 'Quiet environment'),
+    (2, (SELECT `fosterHomeID` FROM `FosterHomes` WHERE `phoneNumber` = '905-555-0112'),
+        (SELECT `catID` FROM `Cats` WHERE `catName` = 'Theo'), '2026-09-10', '2026-09-20', 'Temporary caregiver availability'),
+    (3, (SELECT `fosterHomeID` FROM `FosterHomes` WHERE `phoneNumber` = '416-555-0111'),
+        (SELECT `catID` FROM `Cats` WHERE `catName` = 'Theo'), '2026-09-20', NULL, 'Return to familiar home'),
+    (4, (SELECT `fosterHomeID` FROM `FosterHomes` WHERE `phoneNumber` = '905-555-0112'),
+        (SELECT `catID` FROM `Cats` WHERE `catName` = 'Jupiter'), '2026-09-01', '2026-09-25', 'Shelter capacity'),
+    (5, (SELECT `fosterHomeID` FROM `FosterHomes` WHERE `phoneNumber` = '416-555-0111'),
+        (SELECT `catID` FROM `Cats` WHERE `catName` = 'Bella'), '2026-10-01', NULL, 'Socialization');
 
 
 COMMIT;
