@@ -1,32 +1,24 @@
 -- Course: CS340 Fall 2026
--- Project Step 3 Draft: Catabase
+-- Project Step 3 FINAL: Catabase
 -- Team Members: Kaia Bahar, Max Riley, Ashley Davis
 -- Group Number: 77
--- Citation for the following code: CS340 course materials used; the following lectures and activities were used as guidelines for the code below.
+-- Citation for the following code: CS340 course materials used as guidelines for the code below (the full list of sources is in README.md).
 -- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Project Step 3 Draft Version: Design Python Class Application + DML SQL - sample_data_manipulation_queries.sql [Course material]. https://canvas.oregonstate.edu/courses/2061186/files/119792862?wrap=1
 -- Curry, M. (November 2026). CS340 Fall 2026 Canvas: What is CRUD? [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/what-is-crud-2?module_item_id=27088389
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Designing a Python Class for Database CRUD Operations [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-designing-a-python-class-for-database-crud-operations?module_item_id=27088390
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Connecting Python to MySQL and Build a CRUD CLI [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-connecting-python-to-mysql-and-build-a-crud-cli?module_item_id=27088391
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Intro to SQL [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-intro-to-sql-2?module_item_id=27088352
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 4 - Creating a Customer Object Table [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-4-creating-a-customer-object-table?module_item_id=27088357
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 8 - SQL Queries of Multiple Tables (JOINS) [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-8-sql-queries-of-multiple-tables-joins?module_item_id=27088370
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 7 - Creating Database Intersection Tables [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-7-creating-database-intersection-tables?module_item_id=27088368
-
 
 
 -- These are the Database Manipulation queries for the Catabase's application tier-class.
 -- Using the Catabase database.
--- These queries read all six tables, and add, update, and delete records in the AdoptionRequests intersection table.
+-- These queries read all six tables, and add, update (all fields or status only), and delete records in the AdoptionRequests intersection table.
 -- Many-to-Many relationship: AdoptionRequests connects Adopters and Cats.
 
 
--- Variables that will be supplied by the application use descriptive :name placeholder; each name identifies the value to supply.
+-- Variables that will be supplied by the application use descriptive :name placeholders (a colon followed by the name); each name identifies the value to supply.
+-- In catabase_dao.py these markers become %s parameters, so values are never pasted into the SQL text.
 -- Dates use YYYY-MM-DD.
 -- Missing notes or a missing reviewer is supplied as SQL NULL.
 -- For purposes of MySQL testing, replace markers :name with the test values.
 -- Method comments correspond to CatabaseDAO in the catabase_dao.py python module
-
-
 
 
 
@@ -60,19 +52,29 @@ ORDER BY fosterHomeID;
 
 -- get all adoption requests to display their details, and their corresponding IDs for update/delete
 -- Application method: get_all_adoption_requests 
--- Requests without a reviewer included 
-SELECT adoptionReqID, adopterID, catID, reviewedByStaffID, adoptionReqDate, adoptionReqStatus, adoptionReqNotes
-FROM AdoptionRequests
-ORDER BY adoptionReqID;
+-- Requests without a reviewer included
+SELECT ar.adoptionReqID, ar.adopterID, CONCAT(a.fName, ' ', a.lName) AS adopterName,
+       ar.catID, c.catName,
+       ar.reviewedByStaffID, CONCAT(s.fName, ' ', s.lName) AS reviewerName,
+       ar.adoptionReqDate, ar.adoptionReqStatus, ar.adoptionReqNotes
+FROM AdoptionRequests ar
+JOIN Adopters a ON ar.adopterID = a.adopterID
+JOIN Cats c ON ar.catID = c.catID
+LEFT JOIN StaffMembers s ON ar.reviewedByStaffID = s.staffID
+ORDER BY ar.adoptionReqID;
 
 
 
 -- get all foster assignments to display current and previous foster placements
 -- Application method: get_all_foster_assignments
 -- NULL end date indicates the foster placement is ongoing
-SELECT fosterAssignmentID, fosterHomeID, catID, fosterStartDate, fosterEndDate, fosterReason
-FROM FosterAssignments
-ORDER BY fosterAssignmentID;
+SELECT fa.fosterAssignmentID, fa.fosterHomeID, fh.fosterName,
+       fa.catID, c.catName,
+       fa.fosterStartDate, fa.fosterEndDate, fa.fosterReason
+FROM FosterAssignments fa
+JOIN FosterHomes fh ON fa.fosterHomeID = fh.fosterHomeID
+JOIN Cats c ON fa.catID = c.catID
+ORDER BY fa.fosterAssignmentID;
 
 
 
@@ -87,7 +89,6 @@ ORDER BY fosterAssignmentID;
 -- MySQL will generate adoptionReqID
 -- Adopter and cat must already exist; if a reviewer is given, this staff member must already exist as well
 INSERT INTO AdoptionRequests (adopterID, catID, reviewedByStaffID, adoptionReqDate, adoptionReqStatus, adoptionReqNotes)
-
 VALUES (:adopter_id, :cat_id, :reviewed_by_staff_id, :request_date, :request_status, :request_notes);
 
 
@@ -111,6 +112,18 @@ SET adopterID = :adopter_id,
     adoptionReqDate = :request_date,
     adoptionReqStatus = :request_status,
     adoptionReqNotes = :request_notes
+WHERE adoptionReqID = :request_id;
+
+
+
+-- DAO method update_request_status runs this query.
+-- updates only the status of the selected adoption request (helper so callers do not pass all seven values)
+-- Application method: update_request_status
+-- Params: 1) request_status
+--         2) request_id
+-- Although SQL needs request_id last for WHERE, the method takes request_id first
+UPDATE AdoptionRequests
+SET adoptionReqStatus = :request_status
 WHERE adoptionReqID = :request_id;
 
 
