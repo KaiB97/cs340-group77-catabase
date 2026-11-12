@@ -58,7 +58,8 @@ def main():
         print("Dates appear as datetime.date(...); None means SQL NULL.")
 
         # ------------------------------------------------------------------
-        section("PART 1 - READ (SELECT): all six tables")
+        section("PART 1 - READ (SELECT) via get_all_cats, get_all_adopters, get_all_staff_members, "
+                "get_all_foster_homes, get_all_adoption_requests, get_all_foster_assignments")
         # ------------------------------------------------------------------
         cats = dao.get_all_cats()
         show_rows("Cats", cats)
@@ -71,8 +72,8 @@ def main():
 
         show_rows("FosterHomes", dao.get_all_foster_homes())
 
-        # Reads now use JOINs (see DML.sql), so each row shows adopter, cat,
-        # reviewer, and foster home names next to the IDs. The driver code is unchanged; only the DAO queries changed.
+        # The two intersection-table reads use JOINs (see DML.sql), so each row shows adopter, cat,
+        # reviewer, and foster home names next to the IDs. The driver code does not change; only the DAO queries do.
         show_requests(dao, "AdoptionRequests - intersection table Adopters <-> Cats, with names from JOINs - before testing")
 
         show_rows("FosterAssignments - intersection table Cats <-> FosterHomes, with names from JOINs", dao.get_all_foster_assignments())
@@ -85,12 +86,12 @@ def main():
         staff_id = staff_members[0]["staffID"]
 
         # ------------------------------------------------------------------
-        section("PART 2 - CREATE (INSERT) into AdoptionRequests: 4 NULL / non-NULL combinations")
+        section("PART 2 - CREATE (INSERT) via add_adoption_request: 4 NULL / non-NULL combinations")
         # ------------------------------------------------------------------
 
-        # Save request IDs for the update and delete tests.
         print(f"Test cat: {cats[0]['catName']} (catID {cat_id}); test adopter: {adopters[0]['fName']} (adopterID {adopter_id})")
 
+        # Save the new request IDs; the update and delete tests use them.
         print("\nCREATE 1: NULL reviewer, NULL notes")
         request_id_1 = dao.add_adoption_request(adopter_id, cat_id, None, "2026-11-03", "Pending", None)
         print(f"Created request ID: {request_id_1}")
@@ -116,7 +117,8 @@ def main():
         show_requests(dao, "AdoptionRequests after CREATE (original 5 plus 4 new)")
 
         # ------------------------------------------------------------------
-        section("PART 3 - UPDATE AdoptionRequests: move the 4 test requests to a different cat and adopter")
+        section("PART 3 - UPDATE via update_adoption_request and update_request_status: "
+                "move the 4 test requests to a different cat and adopter")
         # ------------------------------------------------------------------
         print(f"New cat: {cats[1]['catName']} (catID {new_cat_id}); new adopter: {adopters[1]['fName']} (adopterID {new_adopter_id})")
 
@@ -150,14 +152,13 @@ def main():
 
         show_requests(dao, "AdoptionRequests after UPDATE")
 
-        
         print("\nUPDATE (status only) using the update_request_status helper:")
         rowcount = dao.update_request_status(request_id_4, "Approved")
         print(f"Request {request_id_4}: status changed to 'Approved', {rowcount} row(s) affected.")
         show_requests(dao, "AdoptionRequests after status-only UPDATE")
 
         # ------------------------------------------------------------------
-        section("PART 4 - FAILED OPERATIONS")
+        section("PART 4 - FAILED OPERATIONS: the DAO rolls back and the driver keeps running")
         # ------------------------------------------------------------------
 
         print("Attempt to CREATE a request for catID 9999, which does not exist:")
@@ -174,7 +175,7 @@ def main():
         show_requests(dao, "AdoptionRequests after the failed operations (unchanged)")
 
         # ------------------------------------------------------------------
-        section("PART 5 - DELETE from AdoptionRequests: remove only the 4 test requests")
+        section("PART 5 - DELETE via delete_adoption_request: remove only the 4 test requests")
         # ------------------------------------------------------------------
         for request_id in [request_id_1, request_id_2, request_id_3, request_id_4]:
             rowcount = dao.delete_adoption_request(request_id)
@@ -195,4 +196,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
