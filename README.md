@@ -162,8 +162,6 @@ The database design, SQL, and most of the Python code are our team's own work, a
 Claude. (11-11-26). Claude (Sonnet 5.5) [Large language model]. https://claude.ai. Used to help develop environmental variables to remove hard-coded credentials.
 
 
- <author name(s)> (<date retrieved>). <title of application/source code/program> (<version, if available>) [Source code]. <URL or publisher information>.
-
 ## Citations
 Our team designed and adapted our project using OSU CS340 lectures and activities.
 The highlighted course materials used were the following:
@@ -180,6 +178,3 @@ The highlighted course materials used were the following:
 
 Images:
 - Reding, M. (November 2026)  Black and White Cat Eating on Bowl, Pexels. [Online]. https://www.pexels.com/photo/black-and-white-cat-eating-on-bowl-12467776/
-
-
-
