@@ -1,21 +1,12 @@
-<div align="center">
+# Catabase
 
-<h1>Catabase</h1>
+## Cat Adoption & Shelter Management System
 
-<h3>Cat Adoption & Shelter Management System</h3>
+**CS340 Fall 2026 · Group 77**
 
-<p>
-  CS340 Fall 2026 · Group 77<br>
-  Kaia Bahar · Max Riley · Ashley Davis
-</p>
+Kaia Bahar, Max Riley, and Ashley Davis
 
-<img
-  src="assets/kitten1.png"
-  alt="kitten"
-  width="100%"
-/>
-
-</div>
+![Shelter Kitten](assets/kitten1.png)
 
 
 
@@ -86,30 +77,46 @@ The above commands will create and select Catabase, and import its sample data a
 
 ## Run the Application
 
-In your local copy of test_driver.py, replace the placeholders accordingly:
-```py
-db = mysql.connector.connect(
-    host="localhost",
-    user="YOUR_MYSQL_USERNAME",
-    password="YOUR_MYSQL_PASSWORD",
-    database="Catabase"
-)
+Open a new terminal in the project folder and then activate your virtual environment.
+Set `DB_USER` and `DB_PASSWORD` in that terminal so the driver can use them.
+
+**macOS / Linux**
+
+Replace `YOUR_MYSQL_USERNAME` with your personal MySQL username, then run:
+
+```sh
+export DB_USER="YOUR_MYSQL_USERNAME"
+printf 'MySQL password: '
+read -r -s DB_PASSWORD
 ```
 
-Replace YOUR_MYSQL_USERNAME with your MySQL user name and replace YOUR_MYSQL_PASSWORD with your password.
-localhost indicates that the server is on your computer. In the case that you used a different name, change the database. 
+Type in your MySQL password, press Enter. Note that the password will be hidden as you type.
+Then run these commands in the same terminal:
 
-While the virtual environment is active and the terminal in your project folder is open, run:
 ```sh
+printf '\n'
+export DB_PASSWORD
 python3 test_driver.py
 ```
 
-On Windows, if your Python command is python, use:
-```sh
+**Windows PowerShell**
+
+Replace both of the placeholders with your MySQL credentials, then run:
+
+```powershell
+$env:DB_USER = "YOUR_MYSQL_USERNAME"
+$env:DB_PASSWORD = "YOUR_MYSQL_PASSWORD"
 python test_driver.py
 ```
 
-The test driver will then run automatically. Note that both Python files must be located in the same project folder. And use the DDL sample data, as it requires at least two cats, two adopters, and one staff member.
+The driver will then connect to the local `Catabase` database. If you imported the
+tables into a database with a different name, make sure to update the `database` setting
+in `test_driver.py`.
+
+Notes: 
+- Keep `test_driver.py` and `catabase_dao.py` files in the same project folder. 
+- Use the DDL sample data, since the driver requires at least two cats, two
+adopters, and one staff member.
 
 
 
@@ -140,11 +147,12 @@ For Windows, use python in place of python3 as needed.
 Our team designed and adapted our project using OSU CS340 lectures and activities.
 The highlighted course materials used were the following:
 
-- Curry, M. (November 2026). *Activity 2 — Python App to Demo 3-Tier*. CS340, Oregon State University. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/assignments/10623022?module_item_id=27088329 
-- Curry, M. (November 2026). *Python CRUD Query App Assignment — Local Testing Example*. CS340, Oregon State University. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/assignments/10623045?module_item_id=27088392 
-- Curry, M. (November 2026). *Exploration — Designing a Python Class for Database CRUD Operations*. CS340, Oregon State University.[Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-designing-a-python-class-for-database-crud-operations?module_item_id=27088390
-- Curry, M. (November 2026). *Exploration — Connecting Python to MySQL and Build a CRUD CLI*. CS340, Oregon State University. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-connecting-python-to-mysql-and-build-a-crud-cli?module_item_id=27088391 
-- Curry, M. (November 2026). *What is CRUD?* and *Sample Data Manipulation Queries*. CS340, Oregon State University. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/what-is-crud-2?module_item_id=27088389 
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *Activity 2 — Python App to Demo 3-Tier*. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/assignments/10623022?module_item_id=27088329 
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *Python CRUD Query App Assignment — Local Testing Example*. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/assignments/10623045?module_item_id=27088392 
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *Exploration — Designing a Python Class for Database CRUD Operations*. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-designing-a-python-class-for-database-crud-operations?module_item_id=27088390
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *Exploration — Connecting Python to MySQL and Build a CRUD CLI*.  [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-connecting-python-to-mysql-and-build-a-crud-cli?module_item_id=27088391 
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *What is CRUD?* and *Sample Data Manipulation Queries*. [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/what-is-crud-2?module_item_id=27088389 
+- Curry, M. (November 2026). CS340 Fall 2026 Canvas: *Activity 8 - SQL Queries of Multiple Tables (JOINS)* [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-8-sql-queries-of-multiple-tables-joins?module_item_id=27088370
 
 Images:
 - Reding, M. (November 2026)  Black and White Cat Eating on Bowl, Pexels. [Online]. https://www.pexels.com/photo/black-and-white-cat-eating-on-bowl-12467776/
