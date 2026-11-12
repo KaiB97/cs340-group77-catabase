@@ -156,20 +156,79 @@ INSERT INTO `FosterHomes` (`fosterHomeID`, `fosterName`, `fosterStatus`, `phoneN
     (3, 'Willow Foster Home', 'Unavailable', '905-555-0113', 'Burlington', 1);
 
 -- Example data for AdoptionRequests
-INSERT INTO `AdoptionRequests` (`adoptionReqID`, `adopterID`, `catID`, `reviewedByStaffID`, `adoptionReqDate`, `adoptionReqStatus`, `adoptionReqNotes`) VALUES
-    (1, 1, 1, 1, '2026-09-05', 'Denied', 'Housing requirements not met.'),
-    (2, 2, 1, NULL, '2026-10-21', 'Pending', NULL),
-    (3, 1, 2, 1, '2026-10-01', 'Approved', 'Adoption completed.'),
-    (4, 3, 3, 2, '2026-10-22', 'Pending', 'Initial review completed; follow-up needed.'),
-    (5, 2, 4, NULL, '2026-10-23', 'Pending', NULL);
+INSERT INTO AdoptionRequests
+    (adoptionReqID, adopterID, catID, reviewedByStaffID,
+     adoptionReqDate, adoptionReqStatus, adoptionReqNotes)
+VALUES
+    (1,
+     (SELECT adopterID FROM Adopters WHERE email = 'bahark@oregonstate.edu'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Theo' AND intakeDate = '2026-09-01' AND breed = 'Ragdoll'),
+     (SELECT staffID FROM StaffMembers WHERE email = 'alex.morgan@example.com'),
+     '2026-09-05', 'Denied', 'Housing requirements not met.'),
+
+    (2,
+     (SELECT adopterID FROM Adopters WHERE email = 'jordan.singh@example.com'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Theo' AND intakeDate = '2026-09-01' AND breed = 'Ragdoll'),
+     NULL,
+     '2026-10-21', 'Pending', NULL),
+
+    (3,
+     (SELECT adopterID FROM Adopters WHERE email = 'bahark@oregonstate.edu'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Jupiter' AND intakeDate = '2026-09-01' AND breed = 'Mainecoon'),
+     (SELECT staffID FROM StaffMembers WHERE email = 'alex.morgan@example.com'),
+     '2026-10-01', 'Approved', 'Adoption completed.'),
+
+    (4,
+     (SELECT adopterID FROM Adopters WHERE email = 'taylor.brooks@example.com'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Bella' AND intakeDate = '2026-09-28' AND breed = 'Domestic Longhair'),
+     (SELECT staffID FROM StaffMembers WHERE email = 'jamie.patel@example.com'),
+     '2026-10-22', 'Pending', 'Initial review completed; follow-up needed.'),
+
+    (5,
+     (SELECT adopterID FROM Adopters WHERE email = 'jordan.singh@example.com'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Coco' AND intakeDate = '2026-10-15' AND breed = 'Bengal'),
+     NULL,
+     '2026-10-23', 'Pending', NULL);
 
 -- Example data for FosterAssignments
-INSERT INTO `FosterAssignments` (`fosterAssignmentID`, `fosterHomeID`, `catID`, `fosterStartDate`, `fosterEndDate`, `fosterReason`) VALUES
-    (1, 1, 1, '2026-09-01', '2026-09-10', 'Quiet environment'),
-    (2, 2, 1, '2026-09-10', '2026-09-20', 'Temporary caregiver availability'),
-    (3, 1, 1, '2026-09-20', NULL, 'Return to familiar home'),
-    (4, 2, 2, '2026-09-01', '2026-09-25', 'Shelter capacity'),
-    (5, 1, 3, '2026-10-01', NULL, 'Socialization');
+INSERT INTO FosterAssignments
+    (fosterAssignmentID, fosterHomeID, catID,
+     fosterStartDate, fosterEndDate, fosterReason)
+VALUES
+    (1,
+     (SELECT fosterHomeID FROM FosterHomes WHERE phoneNumber = '416-555-0111'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Theo' AND intakeDate = '2026-09-01' AND breed = 'Ragdoll'),
+     '2026-09-01', '2026-09-10', 'Quiet environment'),
+
+    (2,
+     (SELECT fosterHomeID FROM FosterHomes WHERE phoneNumber = '905-555-0112'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Theo' AND intakeDate = '2026-09-01' AND breed = 'Ragdoll'),
+     '2026-09-10', '2026-09-20', 'Temporary caregiver availability'),
+
+    (3,
+     (SELECT fosterHomeID FROM FosterHomes WHERE phoneNumber = '416-555-0111'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Theo' AND intakeDate = '2026-09-01' AND breed = 'Ragdoll'),
+     '2026-09-20', NULL, 'Return to familiar home'),
+
+    (4,
+     (SELECT fosterHomeID FROM FosterHomes WHERE phoneNumber = '905-555-0112'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Jupiter' AND intakeDate = '2026-09-01' AND breed = 'Mainecoon'),
+     '2026-09-01', '2026-09-25', 'Shelter capacity'),
+
+    (5,
+     (SELECT fosterHomeID FROM FosterHomes WHERE phoneNumber = '416-555-0111'),
+     (SELECT catID FROM Cats
+      WHERE catName = 'Bella' AND intakeDate = '2026-09-28' AND breed = 'Domestic Longhair'),
+     '2026-10-01', NULL, 'Socialization');
 
 
 
