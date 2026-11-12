@@ -2,16 +2,10 @@
 -- Project Step 3 Draft: Catabase
 -- Team Members: Kaia Bahar, Max Riley, Ashley Davis
 -- Group Number: 77
--- Citation for the following code: CS340 course materials used; the following lectures and activities were used as guidelines for the code below.
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Project Step 3 Draft Version: Design Python Class Application + DML SQL - sample_data_manipulation_queries.sql [Course material]. https://canvas.oregonstate.edu/courses/2061186/files/119792862?wrap=1
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: What is CRUD? [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/what-is-crud-2?module_item_id=27088389
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Designing a Python Class for Database CRUD Operations [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-designing-a-python-class-for-database-crud-operations?module_item_id=27088390
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Connecting Python to MySQL and Build a CRUD CLI [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-connecting-python-to-mysql-and-build-a-crud-cli?module_item_id=27088391
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Exploration - Intro to SQL [Course material]. https://canvas.oregonstate.edu/courses/2061186/pages/exploration-intro-to-sql-2?module_item_id=27088352
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 4 - Creating a Customer Object Table [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-4-creating-a-customer-object-table?module_item_id=27088357
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 8 - SQL Queries of Multiple Tables (JOINS) [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-8-sql-queries-of-multiple-tables-joins?module_item_id=27088370
--- Curry, M. (November 2026). CS340 Fall 2026 Canvas: Activity 7 - Creating Database Intersection Tables [Course Material]. https://canvas.oregonstate.edu/courses/2061186/pages/activity-7-creating-database-intersection-tables?module_item_id=27088368
-
+-- Citation for the following code: 
+-- Date: 11/3/2026
+-- Adapted from the CS340 sample data manipulation queries.
+-- See README Acknowledgements for full course material citations.
 
 
 -- These are the Database Manipulation queries for the Catabase's application tier-class.
@@ -61,18 +55,38 @@ ORDER BY fosterHomeID;
 -- get all adoption requests to display their details, and their corresponding IDs for update/delete
 -- Application method: get_all_adoption_requests 
 -- Requests without a reviewer included 
-SELECT adoptionReqID, adopterID, catID, reviewedByStaffID, adoptionReqDate, adoptionReqStatus, adoptionReqNotes
+SELECT AdoptionRequests.adoptionReqID,
+       AdoptionRequests.adopterID,
+       AdoptionRequests.catID,
+       AdoptionRequests.reviewedByStaffID,
+       AdoptionRequests.adoptionReqDate,
+       AdoptionRequests.adoptionReqStatus,
+       AdoptionRequests.adoptionReqNotes,
+       Adopters.fName AS adopterFirstName,
+       Adopters.lName AS adopterLastName,
+       Cats.catName
 FROM AdoptionRequests
-ORDER BY adoptionReqID;
+INNER JOIN Adopters ON AdoptionRequests.adopterID = Adopters.adopterID
+INNER JOIN Cats ON AdoptionRequests.catID = Cats.catID
+ORDER BY AdoptionRequests.adoptionReqID;
 
 
 
 -- get all foster assignments to display current and previous foster placements
 -- Application method: get_all_foster_assignments
 -- NULL end date indicates the foster placement is ongoing
-SELECT fosterAssignmentID, fosterHomeID, catID, fosterStartDate, fosterEndDate, fosterReason
+SELECT FosterAssignments.fosterAssignmentID,
+       FosterAssignments.fosterHomeID,
+       FosterAssignments.catID,
+       FosterAssignments.fosterStartDate,
+       FosterAssignments.fosterEndDate,
+       FosterAssignments.fosterReason,
+       Cats.catName,
+       FosterHomes.fosterName
 FROM FosterAssignments
-ORDER BY fosterAssignmentID;
+INNER JOIN Cats ON FosterAssignments.catID = Cats.catID
+INNER JOIN FosterHomes ON FosterAssignments.fosterHomeID = FosterHomes.fosterHomeID
+ORDER BY FosterAssignments.fosterAssignmentID;
 
 
 
